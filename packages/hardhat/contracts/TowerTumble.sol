@@ -14,6 +14,7 @@ contract TowerTumble {
     uint256 id;
     uint256 numberOfPlayers;
     uint256 prizePool;
+    uint256 blocks;
     bool isFinish;
   }
 
@@ -27,14 +28,26 @@ contract TowerTumble {
     return matchList;
   }
 
+  function getMatcheByID(uint256 _matchId) public view returns (Match memory){
+    return matchList[_matchId];
+  }
+
   function createMatch() external {
     uint256 newMatchId = numberOfMatches.current();
-    matchList.push(Match(newMatchId, 0, 0, false));
+    matchList.push(Match(newMatchId, 0, 0, 0, false));
     numberOfMatches.increment();
   }
 
   function joinMatch(uint256 _matchId) external {
     matchList[_matchId].numberOfPlayers += 1;
+  }
+
+  function stackBlock(uint256 _matchId) external {
+    matchList[_matchId].blocks += 1;
+    uint _randomNumber = uint(keccak256(abi.encode(block.timestamp, block.difficulty, msg.sender))) % 10;
+    if (_randomNumber == 5) {
+      matchList[_matchId].isFinish = true;
+    }
   }
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed
