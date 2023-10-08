@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
+import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const MatchRoom: NextPage = () => {
@@ -8,6 +9,12 @@ const MatchRoom: NextPage = () => {
   const { data: matchData } = useScaffoldContractRead({
     contractName: "TowerTumble",
     functionName: "getMatcheByID",
+    args: [id as any],
+  });
+
+  const { data: playersData } = useScaffoldContractRead({
+    contractName: "TowerTumble",
+    functionName: "getPlayerByMatchID",
     args: [id as any],
   });
 
@@ -30,6 +37,9 @@ const MatchRoom: NextPage = () => {
 
         <p>Number of Blocks: {matchData?.blocks.toString()}</p>
         <p>Game Over: {matchData?.isFinish ? "Yes" : "No"}</p>
+        {playersData?.map((p, index) => (
+          <Address key={index} address={p} />
+        ))}
 
         <button
           className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"

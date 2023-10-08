@@ -11,7 +11,7 @@ export const GameItem = ({ data }: any) => {
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
       console.log(txnReceipt);
-      router.push("/match/" + data.id.toString())
+      router.push("/match/" + data.id.toString());
     },
   });
 
