@@ -50,8 +50,8 @@ contract TowerTumble {
 
   function stackBlock(uint256 _matchId) external {
     matchList[_matchId].blocks += 1;
-    uint _randomNumber = uint(keccak256(abi.encode(block.timestamp, block.difficulty, msg.sender))) % 10;
-    if (_randomNumber == 5) {
+    uint _randomNumber = uint(keccak256(abi.encode(block.timestamp, block.difficulty, msg.sender))) % 5;
+    if (_randomNumber == 1) {
       matchList[_matchId].isFinish = true;
     }
   }
