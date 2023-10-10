@@ -9,6 +9,7 @@ contract TowerTumble {
 
   address public immutable owner;
   Match[] public matchList;
+  mapping(uint256 => mapping(address => uint256)) public timeLeft;
 
   struct Match {
     uint256 id;
@@ -46,9 +47,11 @@ contract TowerTumble {
   function joinMatch(uint256 _matchId) external {
     matchList[_matchId].numberOfPlayers += 1;
     matchList[_matchId].players.push(msg.sender);
+    timeLeft[_matchId][msg.sender] = block.timestamp + 30;
   }
 
   function stackBlock(uint256 _matchId) external {
+    require(timeLeft[_matchId][msg.sender] >= block.timestamp, "Time up");
     matchList[_matchId].blocks += 1;
     uint _randomNumber = uint(keccak256(abi.encode(block.timestamp, block.difficulty, msg.sender))) % 5;
     if (_randomNumber == 1) {
