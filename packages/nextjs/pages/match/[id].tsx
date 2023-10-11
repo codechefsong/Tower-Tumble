@@ -63,8 +63,8 @@ const MatchRoom: NextPage = () => {
               Time Left:{" "}
               {blockTime?.toString() &&
                 deadline?.toString() &&
-                parseInt(deadline?.toString()) - parseInt(blockTime?.toString())}
-              {" "}Seconds
+                parseInt(deadline?.toString()) - parseInt(blockTime?.toString())}{" "}
+              Seconds
             </p>
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
