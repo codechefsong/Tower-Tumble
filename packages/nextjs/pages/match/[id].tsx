@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
+import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const MatchRoom: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { address } = useAccount();
+
   const { data: matchData } = useScaffoldContractRead({
     contractName: "TowerTumble",
     functionName: "getMatcheByID",
@@ -16,6 +19,17 @@ const MatchRoom: NextPage = () => {
     contractName: "TowerTumble",
     functionName: "getPlayerByMatchID",
     args: [id as any],
+  });
+
+  const { data: blockTime } = useScaffoldContractRead({
+    contractName: "TowerTumble",
+    functionName: "getBlockTime",
+  });
+
+  const { data: deadline } = useScaffoldContractRead({
+    contractName: "TowerTumble",
+    functionName: "timeLeft",
+    args: [id as any, address as any],
   });
 
   const { writeAsync: stackBlock } = useScaffoldContractWrite({
@@ -43,6 +57,15 @@ const MatchRoom: NextPage = () => {
               <Address key={index} address={p} />
             ))}
 
+            <p>Current Time: {blockTime?.toString()}</p>
+            <p>Deadline: {deadline?.toString()}</p>
+            <p>
+              Time Left:{" "}
+              {blockTime?.toString() &&
+                deadline?.toString() &&
+                parseInt(deadline?.toString()) - parseInt(blockTime?.toString())}
+              {" "}Seconds
+            </p>
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
               onClick={() => stackBlock()}

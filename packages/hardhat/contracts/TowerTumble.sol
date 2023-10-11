@@ -34,8 +34,12 @@ contract TowerTumble {
     return matchList[_matchId];
   }
 
-   function getPlayerByMatchID(uint256 _matchId) public view returns (address[] memory){
+  function getPlayerByMatchID(uint256 _matchId) public view returns (address[] memory){
     return matchList[_matchId].players;
+  }
+
+  function getBlockTime() public view returns (uint256){
+    return block.timestamp;
   }
 
   function createMatch() external {
