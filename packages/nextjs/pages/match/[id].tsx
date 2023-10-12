@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
@@ -81,13 +82,17 @@ const MatchRoom: NextPage = () => {
           </div>
 
           <div className="flex flex-col items-center">
-            {Array(matchData?.blocks.toString() ? +matchData?.blocks.toString() : 0)
-              .fill(1)
-              .map((el, index) => (
-                <div key={index} className="w-16 h-16 bg-white px-5 py-3 border border-gray-30">
-                  #{index}
-                </div>
-              ))}
+            {!matchData?.isFinish ? (
+              Array(matchData?.blocks.toString() ? +matchData?.blocks.toString() : 0)
+                .fill(1)
+                .map((el, index) => (
+                  <div key={index} className="w-16 h-16 bg-amber-500 px-5 py-3 border border-gray-30">
+                    #{index}
+                  </div>
+                ))
+            ) : (
+              <Image className="" src="/assets/blocks.png" width={300} height={300} alt="Item" />
+            )}
           </div>
         </div>
       </div>
