@@ -57,9 +57,9 @@ contract TowerTumble {
   function stackBlock(uint256 _matchId) external {
     require(timeLeft[_matchId][msg.sender] >= block.timestamp, "Time up");
     require(!matchList[_matchId].isFinish, "Game Over");
-    timeLeft[_matchId][msg.sender] = block.timestamp + 30;
+    timeLeft[_matchId][msg.sender] = block.timestamp + 60;
     matchList[_matchId].blocks += 1;
-    uint _randomNumber = uint(keccak256(abi.encode(block.timestamp, block.difficulty, msg.sender))) % 5;
+    uint _randomNumber = uint(keccak256(abi.encode(block.timestamp, block.difficulty, msg.sender))) % 9;
     if (_randomNumber == 1) {
       matchList[_matchId].isFinish = true;
     }

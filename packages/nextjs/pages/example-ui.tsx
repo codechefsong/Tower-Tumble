@@ -44,7 +44,7 @@ const ExampleUI: NextPage = () => {
                 <tr className="rounded-xl text-sm text-base-content">
                   <th className="bg-primary">Game ID</th>
                   <th className="bg-primary">Number Of Players</th>
-                  <th className="bg-primary">Prize Pool</th>
+                  <th className="bg-primary">Number Of Blocks</th>
                   <th className="bg-primary">Is Finish?</th>
                   <th className="bg-primary">Action</th>
                 </tr>
