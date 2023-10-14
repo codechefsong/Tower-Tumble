@@ -58,8 +58,8 @@ const MatchRoom: NextPage = () => {
               <Address key={index} address={p} />
             ))}
 
-            <p>Current Time: {blockTime?.toString()}</p>
-            <p>Deadline: {deadline?.toString()}</p>
+            {/* <p>Current Time: {blockTime?.toString()}</p>
+            <p>Deadline: {deadline?.toString()}</p> */}
             <p>
               Time Left:{" "}
               {blockTime?.toString() &&
